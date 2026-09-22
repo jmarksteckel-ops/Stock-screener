@@ -32,7 +32,7 @@ import yfinance as yf
 # CONFIG
 # ----------------------------------------------------------------------
 
-# How close to the 52-week low counts as "near" (5% = within 5% above the low)
+# How close to the 52-week low counts as "near" (10% = within 10% above the low)
 NEAR_LOW_THRESHOLD = 0.10
 
 # Minimum share of analysts that must be bullish (Buy/Overweight/Outperform
@@ -398,8 +398,8 @@ import yfinance as yf
 # CONFIG
 # ----------------------------------------------------------------------
 
-# How close to the 52-week low counts as "near" (5% = within 5% above the low)
-NEAR_LOW_THRESHOLD = 0.05
+# How close to the 52-week low counts as "near" (10% = within 10% above the low)
+NEAR_LOW_THRESHOLD = 0.10
 
 # Minimum share of analysts that must be bullish (Buy/Overweight/Outperform
 # are all bucketed into yfinance's "strongBuy" + "buy" categories)
