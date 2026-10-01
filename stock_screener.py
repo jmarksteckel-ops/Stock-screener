@@ -34,7 +34,7 @@ import yfinance as yf
 # ----------------------------------------------------------------------
 
 # How close to the 52-week low counts as "near" (5% = within 5% above the low)
-NEAR_LOW_THRESHOLD = 0.05
+NEAR_LOW_THRESHOLD = 0.10
 
 # Minimum share of analysts that must be bullish (Buy/Overweight/Outperform
 # are all bucketed into yfinance's "strongBuy" + "buy" categories)
@@ -111,9 +111,15 @@ def get_day_losers(count=DECLINERS_COUNT):
 
 def get_sp500_tickers():
     """Fallback universe: current S&P 500 constituents from Wikipedia.
-    Used only if the day_losers screen is unavailable."""
+    Used only if the day_losers screen is unavailable.
+    Sends a browser User-Agent — Wikipedia blocks the default Python
+    urllib user agent with a 403."""
+    import requests
     url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
-    table = pd.read_html(url)[0]
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; stock-screener/1.0)"}
+    resp = requests.get(url, headers=headers, timeout=15)
+    resp.raise_for_status()
+    table = pd.read_html(resp.text)[0]
     return table["Symbol"].str.replace(".", "-", regex=False).tolist()
 
 
